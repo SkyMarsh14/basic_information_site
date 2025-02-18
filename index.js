@@ -4,7 +4,11 @@ const fs = require("fs");
 http
   .createServer(function (req, res) {
     const pageUrl = url.parse(req.url, true);
-    const filename = "." + pageUrl.pathname + ".html";
+    let filename = "." + pageUrl.pathname + ".html";
+
+    if (pageUrl.href === "/") {
+      filename = "./index.html";
+    }
     fs.readFile(filename, function (err, data) {
       if (err) {
         res.writeHead(404, { "Content-Type": "text/html" });
